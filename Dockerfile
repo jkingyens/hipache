@@ -7,10 +7,9 @@ RUN apt-get update
 RUN apt-get -y install nodejs
 RUN npm install node-etcd@2.0.10 -g 
 RUN mkdir /work
-ADD package.json /work/package.json 
-RUN cd work && npm install 
 ADD . /work
+RUN cd work && npm install 
 ENV NODE_ENV production
 EXPOSE 80 443
 VOLUME [ "/ssl" ]
-ENTRYPOINT ["/usr/bin/node", "/work/bin/hipache", "-c", "/work/config/config.json"]
+CMD ["/usr/bin/node", "/work/bin/hipache", "-c", "/work/config/config_prod.json"]
