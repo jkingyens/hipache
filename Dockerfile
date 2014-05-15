@@ -12,4 +12,4 @@ RUN cd work && npm install
 ENV NODE_ENV production
 EXPOSE 80 443
 VOLUME [ "/ssl" ]
-CMD ["/usr/bin/node", "/work/bin/hipache", "-c", "/work/config/config_prod.json"]
+CMD ["/usr/bin/node", "/work/bin/hipache", "-c", "/work/config/config.json"]
