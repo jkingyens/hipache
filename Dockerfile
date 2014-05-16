@@ -7,8 +7,9 @@ RUN apt-get update
 RUN apt-get -y install nodejs=0.10.28-1chl1~precise1
 RUN npm install node-etcd@2.1.1 -g
 RUN mkdir /work
-ADD . /work
+ADD package.json /work/
 RUN cd work && npm install
+ADD . /work
 ENV NODE_ENV production
 EXPOSE 80 443
 VOLUME [ "/ssl" ]
