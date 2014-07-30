@@ -1,26 +1,17 @@
-# This file describes how to build hipache into a runnable linux container with all dependencies installed
-# To build:
-# 1) Install docker (http://docker.io)
-# 2) Clone hipache repo if you haven't already: git clone https://github.com/dotcloud/hipache.git
-# 3) Build: cd hipache && docker build .
-# 4) Run:
-# docker run -d <imageid>
-# redis-cli
-#
-# VERSION		0.2
-# DOCKER-VERSION	0.4.0
-
-from	ubuntu:12.04
-run	echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-run	apt-get -y update
-run	apt-get -y install wget git redis-server supervisor
-run	wget -O - http://nodejs.org/dist/v0.10.25/node-v0.10.25-linux-x64.tar.gz | tar -C /usr/local/ --strip-components=1 -zxv
-run	npm install hipache -g
-run	mkdir -p /var/log/supervisor
-add	./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-add	./config/config_dev.json /usr/local/lib/node_modules/hipache/config/config_dev.json
-add	./config/config_test.json /usr/local/lib/node_modules/hipache/config/config_test.json
-add	./config/config.json /usr/local/lib/node_modules/hipache/config/config.json
-expose	80
-expose	6379
-cmd	["supervisord", "-n"]
+FROM ubuntu:12.04
+RUN apt-get update
+RUN apt-get install -y python-software-properties python g++ make
+RUN add-apt-repository -y ppa:chris-lea/node.js
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get -y install nodejs=0.10.29-1chl1~precise1
+RUN npm install node-etcd@2.1.1 -g
+RUN mkdir /work
+ADD package.json /work/
+RUN cd work && npm install
+ADD . /work
+ENV NODE_ENV production
+ENV NG_HTTPS true 
+EXPOSE 80 443
+WORKDIR /work
+CMD ["/usr/bin/node", "/work/bin/hipache", "-c", "/work/config/config.json"]
