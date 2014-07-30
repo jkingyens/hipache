@@ -1,6 +1,6 @@
 {
     "server": {
-        "accessLog": "/var/log/nginx/access.log",
+        "accessLog": "/tmp/access.log",
         "port": 80,
         "workers": 10,
         "maxSockets": 100,
@@ -11,9 +11,10 @@
         "httpKeepAlive": false,
         "https": {
             "port": 443,
-            "key": "/etc/ssl/ssl.key",
-            "cert": "/etc/ssl/ssl.crt"
+            "key": "/ssl/ssl.key",
+            "cert": "/ssl/ssl.crt"
         }
     },
-    "driver": ["redis://127.0.0.1:6379"]
+    "address": [ "0.0.0.0" ],
+    "driver": ["etcd://172.17.42.1:4001/#/hipache/"]
 }
