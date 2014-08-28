@@ -5,9 +5,9 @@
         "workers": 10,
         "maxSockets": 100,
         "deadBackendTTL": 30,
-        "tcpTimeout": 30,
+        "tcpTimeout": 0,
         "retryOnError": 3,
-        "deadBackendOn500": true,
+        "deadBackendOn500": false,
         "httpKeepAlive": false,
         "https": {
             "port": 443,
