@@ -8,12 +8,7 @@
         "tcpTimeout": 0,
         "retryOnError": 3,
         "deadBackendOn500": false,
-        "httpKeepAlive": false,
-        "https": {
-            "port": 443,
-            "key": "/ssl/ssl.key",
-            "cert": "/ssl/ssl.crt"
-        }
+        "httpKeepAlive": false
     },
     "address": [ "0.0.0.0" ],
     "driver": ["etcd://172.17.42.1:2379/#/hipache/"]
